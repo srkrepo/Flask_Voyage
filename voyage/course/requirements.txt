@@ -1,0 +1,14 @@
+pandas
+flask_migrate
+flask_testing
+Flask-JWT-Extended
+Flask-RESTful
+flask_script
+Flask
+Flask-SQLAlchemy
+Jinja2
+MarkupSafe
+SQLAlchemy
+Werkzeug
+gunicorn
+psycopg2==2.6

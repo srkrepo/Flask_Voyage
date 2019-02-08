@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="text-center">
+        <h1>Bon Voyage!</h1>
+    </div>
+
+    <br>
+
+
+    <div>
+        {% for post in posts %}
+            <h4 class="well"><strong>{{ post.text }}</strong> - <em>{{ post.date_posted.strftime('%Y-%m-%d') }}</em>
+            </h4>
+        {% endfor %}
+    </div>
+
+{% endblock %}

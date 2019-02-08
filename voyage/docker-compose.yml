@@ -1,0 +1,55 @@
+# --------------------------------------------------------------
+#
+#   This file is part of voyage.
+#    __file__ : DockerFile
+#   __author__ = 'Sri Pandi, Satheesh Rathinakumar'
+#
+# --------------------------------------------------------------
+
+version: '2.1'
+
+services:
+    course:
+        restart: always
+        build: ./course
+        links:
+        - postgres
+        ports:
+        - "5060:5060"
+        depends_on:
+        - postgres
+        env_file: .env
+        networks:
+        - net
+#        command: gunicorn -w 1 -b :5060 create_app:app
+        command: gunicorn -w 1 -b :5060 manage:app
+
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        restart: always
+        ports:
+        - "8001:8001"
+        depends_on:
+        - course
+        networks:
+        - net
+
+    postgres:
+        build: postgres
+        container_name: postgres
+        environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_PORT=5432
+        - POSTGRES_DB=voyage
+        volumes:
+        - ./postgres-data/postgres:/var/lib/postgresql/data
+#        - ./create.sql:/docker-entrypoint-initdb.d/create.sql
+        ports:
+        - "5432:5432"
+        networks:
+        - net
+
+networks:
+    net:
